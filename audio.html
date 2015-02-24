@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>audio playlist</title>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<script src="mediaelement/build/jquery.js"></script>
+<script src="mediaelement/build/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="mediaelement/build/mediaelementplayer.min.css" />
+<script>
+    $(function(){
+        $('video,audio').mediaelementplayer({
+            success: function (mediaElement, domObject) {
+                mediaElement.addEventListener('ended', function (e) {
+                    PlayNext(e.target);
+                }, false);
+            },
+            keyActions: []
+        });
+
+        $('.play-list li').click(function() {
+            $(this).addClass('current').siblings().removeClass('current');
+            var play_src = $(this).text();
+            $('#play:first').each(function(){
+                this.player.pause();
+                this.player.setSrc(play_src);
+				this.player.play();
+            });
+        });
+
+    });
+
+    function PlayNext(currentPlayer) {
+        if ($('.play-list li.current').length > 0){
+            var current_item = $('.play-list li.current:first');
+            var play_src = $(current_item).next().text();
+            $(current_item).next().addClass('current').siblings().removeClass('current');
+            console.log('if '+play_src);
+        }else{
+            var current_item = $('.play-list li:first');
+            var play_src = $(current_item).next().text();
+            $(current_item).next().addClass('current').siblings().removeClass('current');
+            console.log('elseif '+play_src);
+        }
+
+        if( $(current_item).is(':last-child') ) {
+            $(current_item).removeClass('current');
+        }else{
+            currentPlayer.setSrc(play_src);
+            currentPlayer.play();
+        }
+    }
+</script>
+</head>
+
+<body>
+<br /><br />
+<div style="width:400px; margin:0px auto;">
+	<h2 align="center">sample playlist</h2>   
+</div><br />
+<div style="width:400px; margin:0px auto">
+<audio id="play" src="cinematic.mp3" type="audio/mp3" controls="controls"></audio>
+</div><br />
+<div style="width:250px; margin:0px auto;">
+	<ul class="play-list">
+    	<li  class="current">cinematic.mp3</li>
+    	<li>contrast.mp3</li>
+    	<li>cosmopolis.mp3</li>
+    	<li>intro.mp3</li>
+    	<li>sphere.mp3</li>
+    	<li>underwater.mp3</li>
+	</ul>
+</div>
+
+</body>
+
+</html>

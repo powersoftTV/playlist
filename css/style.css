@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	background: #E5E5E5 url(../images/top_glow.jpg) no-repeat top center;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#231f20;
+}
+
+a{
+	color:#656565;
+}
+.play-list li:hover {
+    background: #ffa;
+    cursor: pointer;
+}
+.play-list li.current {
+    background: #cddfff;
+}
